@@ -1,0 +1,70 @@
+<div style="margin-top:100px;">
+
+   
+</div>
+
+
+<div class="my-container mx-auto" *ngIf="searchedProducts.length>0;else elseBlock">
+    <!-- Toolbar -->
+    
+    <div class="border mb-5 p-3 d-flex justify-content-around">
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-outline-secondary" [ngClass]="{'active': view === 'grid'}"
+                    (click)="view = 'grid'">Grid</button>
+            <button type="button" class="btn btn-outline-secondary" [ngClass]="{'active': view === 'list'}"
+                    (click)="view = 'list'">List</button>
+        </div>
+
+        <div class="w-50 d-flex">
+            <span class="me-5 d-flex align-items-center fs-5 fw-bold">Sort By</span>
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-outline-secondary" [ngClass]="{'active': sortby === 'default'}"
+                        (click)="sortby = 'default'; sortByPrice(sortby)">
+                    Default
+                </button>
+                <button type="button" class="btn btn-outline-secondary" [ngClass]="{'active': sortby === 'htl'}"
+                        (click)="sortby = 'htl'; sortByPrice(sortby)">
+                    Price (High to Low)
+                </button>
+                <button type="button" class="btn btn-outline-secondary" [ngClass]="{'active': sortby === 'lth'}"
+                        (click)="sortby = 'lth'; sortByPrice(sortby)">
+                    Price (Low to High)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="border p-5">
+        <h1 style="margin-bottom: 20px;">Showing Results for "{{productName}}" </h1>
+        <!-- Grid View -->
+        <div class="grid-view" *ngIf="view === 'grid'">
+            <div class="row g-5">
+                <div class="col-3" *ngFor="let product of searchedProducts">
+                    <app-product [product]="product"></app-product>
+                </div>
+            </div>
+        </div>
+
+        <!-- List View -->
+        <div class="list-view" *ngIf="view === 'list'">
+            <div class="row mb-5" *ngFor="let product of searchedProducts">
+                <div class="col">
+                    <app-product [view]="'list'" [product]="product"></app-product>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<ng-template #elseBlock>
+
+    
+    <h1 style="margin-bottom: 20px; margin-left:40px;">No Results for "{{productName}}" </h1>
+    <img src="../../assets/Images/No product/no-products.jpg" style="display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  height:70vh;">
+
+</ng-template>
